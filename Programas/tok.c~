@@ -1,0 +1,55 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+
+void
+eschar(char *str,int *i){
+	
+	while(str[(*i)]!= ' '){
+		(*i)++;
+	}
+	str[(*i)]='\0';
+	(*i)++;
+}
+
+void
+nochar(char *str,int *i){
+	while((str[*i]==' ') || (str[*i]== '\t') || (str[*i]=='\r') || (str[*i]=='\n')){/*Por si tengo más espacios*/
+		(*i)++;
+	}
+}
+
+int
+mytokenize(char *str, char **args, int maxargs){
+	int ntokens=0;
+	int i = 0;
+	int len = 0;
+	len = strlen(str);
+	nochar(str,&i);
+	args[ntokens]= &str[i];
+	for (i = 0;i<len;i++){
+		if(ntokens <= maxargs){
+			eschar(str,&i);
+			nochar(str,&i);
+			if (str[i] != '\0'){
+				args[ntokens] = &str[i];/*asigna la direccion de memoria*/
+				ntokens++;
+			}
+		}
+	}
+	return ntokens;
+}
+
+int
+main(int argc, char *argv[])
+{
+	int n;
+	char *args[10];
+	char cadena[] = "  Hola    mundo \t que \r tal estas  \t ";
+	int i=0;
+	n = mytokenize (cadena , args , 10);
+	for (i = 0;i<n;i++){
+		printf("%d:%s\n",i,args[i]);
+	}
+	exit(EXIT_SUCCESS);
+}

@@ -1,0 +1,12 @@
+#include <stdlib.h>
+#include <stdio.h>
+
+/* Hola mundo*/
+
+int
+main(int argc, char *argv[])
+{
+	printf("hola mundo");
+	printf("\n");
+	exit(EXIT_SUCCESS);
+}
