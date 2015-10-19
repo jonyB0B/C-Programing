@@ -19,7 +19,7 @@ int first[L];
 int last[L];
 int total;
 
-void 
+static void 
 count(int nr,int iflag,char buffer[]){
 
 	int primera =1;
@@ -50,7 +50,8 @@ count(int nr,int iflag,char buffer[]){
 		}
 	}	
 }
-void 
+
+static void 
 freqcount(int fd , int iflag){
 
 	char buffer[N];
@@ -68,7 +69,7 @@ freqcount(int fd , int iflag){
 	}
 }
 
-void
+static void
 freqargs(int argc, char *argv[],int fd){
 
 	int iflag =0;
