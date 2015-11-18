@@ -1,0 +1,94 @@
+int main (void){
+	int pid;
+	int status;
+
+	pid=fork();
+
+	switch(pid){
+		case-1:
+			err(1,"fork");
+		case 0 :
+			execl("/bin/ls","ls","-l",NULL);
+			err(1,"/bin/ls");//si el comando no existe mata al hijo 
+		default:
+			wait(&status);//devuelve el entero del hijo que ha terminado 
+			printf("hijo terminado: %d\n",status);
+	}
+	exit(EXIT_SUCESS);
+}
+
+dup 2 para cambiar las salidas
+
+Padre
+0
+1
+2
+
+HIJO
+0 teclado
+1 salida
+2 salida
+3 f1
+4 f2
+
+dup2(fd,0);
+dup2(fd2,1);
+close(fd);
+close(fd2);
+
+0 f1
+1 f2
+2 salida
+3 f1
+4 f2
+
+///////////////////PIPES/////////////////////////////
+
+int p[2];
+
+	parte lectura p[1](==)p[0] parte escritura
+
+llamada sistema --> pipe
+
+int main(void){
+
+	int p[2]
+
+	pipe (p);
+
+	pid = fork();
+    switch(pid){
+    case -1:
+        err(1,"Error: fork \n");
+        break;
+    case 0:
+      	dup2(p[1],1);
+		close(p[0]);//solo tengo que tener abierto 0 1 2
+		close(p[1]);
+		
+		execlp("ls","ls",NULL);
+		exit(1);
+    }
+
+	pid2 = fork();
+    switch(pid2){
+    case -1:
+        err(1,"Error: fork \n");
+        break;
+    case 0:
+		dup2(p[0],0);
+		close(p[0]);//solo tengo que tener abierto 0 1 2
+		close(p[1]);
+		
+		execlp("ls","ls",NULL);
+		exit(1);
+      
+    }
+	close(p[0]);//solo tengo que tener abierto 0 1 2 por lo que tengo que cerrar
+	close(p[1]);
+	wait(NULL);
+	wait(NULL);
+}
+
+
+

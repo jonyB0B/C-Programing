@@ -58,6 +58,7 @@ creatfile(char *name,int bytes){
 }
 
 int
+<<<<<<< HEAD
 estxt(char **p){
   return (*p!=NULL)&&(strlen(*p)==strlen(".txt"));
 }
@@ -76,6 +77,35 @@ waitchild(int txtfiles){
 
   if (finalstatus)
     exit(EXIT_FAILURE);
+=======
+estxt(char *p){
+  if((p!=NULL)&&(strlen(p)==strlen(".txt"))){
+      return 1;
+  }else{
+      return 0;
+  }
+}
+
+int
+forks(char *name,int bytes){
+  int ficheros = 0;
+  struct stat fichero;
+  int pid;
+
+  pid = fork();
+  switch(pid){
+  case -1:
+      return -1;
+  case 0:
+      stat(name,&fichero);
+      ficheros++;
+      if ((fichero.st_size)<bytes)
+        bytes = 0;
+      mostrar_fich(name,bytes);
+  default:
+      exit(1);
+  }
+>>>>>>> 26c3ad21141ef6717f3f7e5b3001a8e5e4902b7d
 }
 
 void
@@ -108,14 +138,19 @@ static void
 leerdirp(DIR *dirp,int bytes){
   struct dirent *direntp;
   struct stat info;
+<<<<<<< HEAD
   char ficheros[MAX][128];
   char *p;
   int txtfiles = 0;
+=======
+  char *p;
+>>>>>>> 26c3ad21141ef6717f3f7e5b3001a8e5e4902b7d
 
   while ((direntp = readdir(dirp)) != NULL) {
     char *name;
     name = direntp->d_name;
     stat(name,&info);
+<<<<<<< HEAD
     if((info.st_mode & S_IFMT)!=S_IFREG)
       continue;
 
@@ -128,6 +163,13 @@ leerdirp(DIR *dirp,int bytes){
     if(txtfiles==MAX){
       fprintf(stderr,"Error: demasiados ficheros\n");
       exit(1);
+=======
+    if((info.st_mode & S_IFMT)==S_IFREG){//miro si es fichero
+      p = strstr(name,".txt");
+      if(estxt(p)){ //aqui veo cuando los archivos son solo .txt
+        forks(name,bytes);
+      }
+>>>>>>> 26c3ad21141ef6717f3f7e5b3001a8e5e4902b7d
     }
   }
   closedir(dirp);
