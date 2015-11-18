@@ -39,19 +39,42 @@ mostrar_fich(char *name,int posicion){
   }
   close(fd);
 }
-static void
+
+int
 estxt(char *p){
-  strlen(p)==strlen(".txt");
+  if((p!=NULL)&&(strlen(p)==strlen(".txt"))){
+      return 1;
+  }else{
+      return 0;
+  }
+}
+
+int
+forks(char *name,int bytes){
+  int ficheros = 0;
+  struct stat fichero;
+  int pid;
+
+  pid = fork();
+  switch(pid){
+  case -1:
+      return -1;
+  case 0:
+      stat(name,&fichero);
+      ficheros++;
+      if ((fichero.st_size)<bytes)
+        bytes = 0;
+      mostrar_fich(name,bytes);
+  default:
+      exit(1);
+  }
 }
 
 static void
 leerdirp(DIR *dirp,int bytes){
   struct dirent *direntp;
   struct stat info;
-  struct stat fichero;
   char *p;
-  int ficheros = 0;
-  int pid;
 
   while ((direntp = readdir(dirp)) != NULL) {
     char *name;
@@ -59,25 +82,11 @@ leerdirp(DIR *dirp,int bytes){
     stat(name,&info);
     if((info.st_mode & S_IFMT)==S_IFREG){//miro si es fichero
       p = strstr(name,".txt");
-      if((p!=NULL)&&(estxt(p))){  //aqui veo cuando los archivos son solo .txt
-        pid = fork();
-	      switch(pid){
-        case -1:
-		        return -1;
-	      case 0:
-            stat(name,&fichero);
-            //ficheros++;
-            //printf("%s\n",name);
-            if ((fichero.st_size)<bytes)
-              bytes = 0;
-            mostrar_fich(name,bytes);
-        default:
-            exit(1);
-        }
+      if(estxt(p)){ //aqui veo cuando los archivos son solo .txt
+        forks(name,bytes);
       }
     }
   }
-  //printf("ficheros: %d\n",ficheros);
   closedir(dirp);
 }
 
