@@ -1,20 +1,14 @@
-#if for y grep
-#script un argumento solo
-#$* argumentos de un script $# numero de argumentos
-#exit 1 error , echo --> salida de error    2&>1>fich
-
 #!/bin/bash
-if [ $# -gt 1 ]
-then
-  echo "Usage: $0 numero de argumentos incorrecto "
+if [ $# -gt 1 ];then
+  echo "Usage: $0 numero de argumentos incorrecto " 1>&2
   exit 1
 fi
 
-for i in $PWD/*.txt
+for i in `ls`
 do
-    if [ $grep '^' $1 $i ]
+    if  grep "^"$1 $i > /dev/null 2>&1 
     then
-      echo mv $i $i.$1
+      mv $i $i.$1
     fi
 done
 exit 0
