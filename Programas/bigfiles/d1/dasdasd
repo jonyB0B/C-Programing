@@ -1,0 +1,5 @@
+#du -a =)=)=) solo el más gordo
+#sort ordenar // awk
+#sed te permite quedarte con los n primeros
+#hacer un for y enchufarlle a salida un pipe for ... in do done | grep bla
+#test para ver si es directorio
