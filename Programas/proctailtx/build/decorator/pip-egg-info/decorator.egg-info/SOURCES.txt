@@ -1,0 +1,17 @@
+CHANGES.txt
+LICENSE.txt
+MANIFEST.in
+documentation.pdf
+performance.sh
+setup.cfg
+docs/README.rst
+pip-egg-info/decorator.egg-info/PKG-INFO
+pip-egg-info/decorator.egg-info/SOURCES.txt
+pip-egg-info/decorator.egg-info/dependency_links.txt
+pip-egg-info/decorator.egg-info/not-zip-safe
+pip-egg-info/decorator.egg-info/top_level.txt
+src/decorator.py
+src/tests/__init__.py
+src/tests/documentation.py
+src/tests/test.py
+src/tests/x.py

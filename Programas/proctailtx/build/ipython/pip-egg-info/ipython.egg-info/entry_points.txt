@@ -1,0 +1,11 @@
+[console_scripts]
+ipython = IPython:start_ipython
+iptest2 = IPython.testing.iptestcontroller:main
+iptest = IPython.testing.iptestcontroller:main
+ipython2 = IPython:start_ipython
+
+[pygments.lexers]
+ipythonconsole = IPython.lib.lexers:IPythonConsoleLexer
+ipython = IPython.lib.lexers:IPythonLexer
+ipython3 = IPython.lib.lexers:IPython3Lexer
+
